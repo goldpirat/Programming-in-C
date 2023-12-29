@@ -1,25 +1,19 @@
 /*
 CH-230-A
-a6 p8.c
+a7 p3.c
 Flori Kusari
 fkusari@jacobs-university.de
 */
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "linked_list.h"
 
-// Define a structure for a node in the linked list
-struct list {
-    int info;
-    struct list* next; // self reference
-};
-
-// Element added at the beginning of the list
-struct list* push_front(struct list* my_list, int value) {
+// Function to add an element at the beginning of the list
+struct list* push_front(struct list *my_list, int value) {
     struct list* newel;
-    newel = (struct list*)malloc(sizeof(struct list));
+    newel = (struct list*) malloc(sizeof(struct list));
 
-    // Check for memory allocation.
     if (newel == NULL) {
         printf("Error allocating memory\n");
         return my_list;
@@ -30,13 +24,12 @@ struct list* push_front(struct list* my_list, int value) {
     return newel;
 }
 
-// Element added at the end of the list
+// Function to add an element at the end of the list
 struct list* push_back(struct list* my_list, int value) {
     struct list* cursor, *newel;
     cursor = my_list;
-    newel = (struct list*)malloc(sizeof(struct list));
+    newel = (struct list*) malloc(sizeof(struct list));
 
-    // Check for memory allocation.
     if (newel == NULL) {
         printf("Error allocating memory\n");
         return my_list;
@@ -54,8 +47,8 @@ struct list* push_back(struct list* my_list, int value) {
     return my_list;
 }
 
-// First element removed
-struct list* remove_first(struct list* my_list) {
+// Function to remove the first element from the list
+struct list* remove_first(struct list *my_list) {
     // If the list is empty, it does not remove any element
     if (my_list == NULL) {
         return my_list;
@@ -68,65 +61,21 @@ struct list* remove_first(struct list* my_list) {
     return my_list;
 }
 
-// The list printed
+// Function to print the elements of the list
 void print_list(struct list* my_list) {
-    struct list* p;
+    struct list *p;
     for (p = my_list; p; p = p->next) {
         printf("%d ", p->info);
     }
     printf("\n");
 }
 
-// The execution is stopped
+// Function to dispose of the entire list and free memory
 void dispose_list(struct list* my_list) {
-    struct list* nextelem;
+    struct list *nextelem;
     while (my_list != NULL) {
         nextelem = my_list->next;
         free(my_list);
         my_list = nextelem;
     }
-}
-
-int main() {
-    struct list* the_list = NULL; //Set to NULL at first.
-    char char1;
-    int x = 1;
-
-    do {
-        scanf("%c", &char1);
-        int i;
-        int j;
-
-
-        // Using required switch case.
-        switch (char1) {
-        case 'a':
-            // Add the following number to the end of the list
-            scanf("%d", &i);
-            getchar();
-            the_list = push_back(the_list, i);
-            break;
-        case 'b':
-            // Add the following number at the beginning of the list
-            scanf("%d", &j);
-            getchar();
-            the_list = push_front(the_list, j);
-            break;
-        case 'r':
-            // Remove the first element from the list
-            the_list = remove_first(the_list);
-            break;
-        case 'p':
-            // Print the list
-            print_list(the_list);
-            break;
-        case 'q':
-            // Quit the execution of the program
-            dispose_list(the_list);
-            x = 0;
-            break;
-        }
-    } while (x);
-
-    return 0;
 }
